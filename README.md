@@ -1,6 +1,5 @@
-# heketi ci-tests
+# heketi centos-ci tests
 
-Continuous integration helpers for heketi.
-
-Various test environments are represented by corresponding branches
-in this repository. For example, there is the `centos-ci` branch.
+This branch contains the helper scripts for the heketi job of the centos-ci.
+They are integrated into the centos-ci by 
+https://github.com/gluster/glusterfs-patch-acceptance-tests/tree/master/centos-ci/heketi-functional .
