@@ -6,18 +6,28 @@ set -e
 # TODO: disable debugging
 set -x
 
-# enable the SCL repository for Vagrant
-yum -y install centos-release-scl
+# enable additional sources for yum
+# (SCL repository for Vagrant, epel for ansible)
+yum -y install centos-release-scl epel-release
 
-# install docker and Vagrant with QEMU
+# Install additional packages
 #
 # note: adding sclo-vagrant1-vagrant explicitly seems to fix
 #   issues where libvirt fails to bring up the vm with errors like this:
 #   "Call to virDomainCreateWithFlags failed: the CPU is incompatible with host
 #    CPU: Host CPU does not provide required features: svm" (or vmx)
 #
-yum -y install docker qemu-kvm qemu-kvm-tools qemu-img \
-	sclo-vagrant1-vagrant sclo-vagrant1-vagrant-libvirt
+yum -y install \
+	docker \
+	qemu-kvm \
+	qemu-kvm-tools \
+	qemu-img \
+	sclo-vagrant1-vagrant \
+	sclo-vagrant1-vagrant-libvirt \
+	git \
+	gcc \
+	make \
+	ansible
 
 # install Go (Heketi depends on version 1.6+)
 if ! yum -y install 'golang >= 1.6'
@@ -28,13 +38,6 @@ then
 	tar xzf go1.6.2.linux-amd64.tar.gz -C /usr/local
 	export PATH=$PATH:/usr/local/go/bin
 fi
-
-# also needs git, gcc and make
-yum -y install git gcc make
-
-# the tests use ansible, that is only available in EPEL
-yum -y install epel-release
-yum -y install ansible
 
 # Vagrant needs libvirtd running
 systemctl start libvirtd
