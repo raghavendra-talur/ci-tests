@@ -27,6 +27,8 @@ yum -y install \
 	git \
 	gcc \
 	make \
+	python-py \
+	python-virtualenv \
 	ansible
 
 # install Go (Heketi depends on version 1.6+)
