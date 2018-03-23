@@ -25,6 +25,7 @@ yum -y install \
 	sclo-vagrant1-vagrant \
 	sclo-vagrant1-vagrant-libvirt \
 	git \
+	mercurial \
 	gcc \
 	make \
 	python-py \
