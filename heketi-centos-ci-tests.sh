@@ -27,8 +27,6 @@ yum -y install \
 	qemu-kvm \
 	qemu-kvm-tools \
 	qemu-img \
-	sclo-vagrant1-vagrant \
-	sclo-vagrant1-vagrant-libvirt \
 	git \
 	mercurial \
 	gcc \
@@ -36,6 +34,9 @@ yum -y install \
 	python-py \
 	python-virtualenv \
 	ansible
+
+yum install https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.rpm -y
+vagrant plugin install vagrant-libvirt
 
 # install Go (Heketi depends on version 1.6+)
 if ! yum -y install 'golang >= 1.6'
