@@ -39,7 +39,7 @@ yum -y install \
 
 yum -y group install "Development Tools"
 
-yum install https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.rpm -y
+rpm -iU --force https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.rpm
 vagrant plugin install vagrant-libvirt
 
 # install Go (Heketi depends on version 1.6+)
