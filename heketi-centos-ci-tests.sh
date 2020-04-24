@@ -6,6 +6,11 @@ set -e
 # TODO: disable debugging
 set -x
 
+vagrant_env(){
+ #scl enable sclo-vagrant1 -- "$@"
+ "$@"
+}
+
 # enable additional sources for yum
 # (SCL repository for Vagrant, epel for ansible)
 yum -y install centos-release-scl epel-release
@@ -105,7 +110,7 @@ git grep -q ^_sudo tests/functional/lib.sh || ( curl https://github.com/heketi/h
 # in order to get proper version metadata & caching support
 # (the echo is becuase of "set -e" and that an existing box will cause
 #  vagrant to return non-zero)
-scl enable sclo-vagrant1 -- \
+vagrant_env \
 	vagrant box add "https://vagrantcloud.com/centos/7" --provider "libvirt" \
 	|| echo "Warning: the vagrant box may already exist OR an error occured"
 
@@ -123,11 +128,11 @@ TEST_TARGET="test-functional"
 RC=0
 make -q "${TEST_TARGET}" > /dev/null 2>&1 || RC=$?
 if [[ ${RC} -eq 1 ]]; then
-	echo make "${TEST_TARGET}" | scl enable sclo-vagrant1 bash
+	echo make "${TEST_TARGET}" | vagrant_env bash
 else
 	# fallback for old branches that did not
 	# have the "test-functional target yet
 	cd $GOPATH/src/github.com/heketi/heketi/tests/functional
-	scl enable sclo-vagrant1 ./run.sh
+	vagrant_env ./run.sh
 fi
 
