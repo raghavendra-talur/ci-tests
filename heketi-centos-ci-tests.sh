@@ -33,7 +33,11 @@ yum -y install \
 	make \
 	python-py \
 	python-virtualenv \
-	ansible
+	ansible \
+	libvirt \
+	libvirt-devel
+
+yum -y group install "Development Tools"
 
 if ! rpm -q vagrant
 then
